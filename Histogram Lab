@@ -1,0 +1,207 @@
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+//prototypes declration
+double* histogram(double data[],double count); 
+double mean(double x[],double count);
+double stvDev(double set[],double c);
+
+int main()
+{
+	//this segment of code explains the program and created the array and variables needed to capture the user input
+	cout << "This program will return the standard deviation and display a histogram for a number set you provide." << endl;
+	double input = 0;
+	int i = 0;
+	double nums[100];
+
+	//this do while loop will prompt the user to enter numbers and records them in an array.
+	//it also tells the user that when they enter a -1 the program will calculate the standard deviation and diplay a histogram.
+	cout << "You may now begin to enter numbers." << endl; 
+	cout << "When are you have entered the last number please enter - 1." << endl;
+	cout << "This will trigger the calculation of the standard deviation of your set and display a histogram." << endl;
+
+	//this variable is will count the number of elements in the nums array. 
+	//It will be needed in the rest of the functions.
+	double count = -1;
+
+	//this do loop prompts the user to enter numbers and adds them to the nums array untill the user enters -1
+	//it also increments the count variable to keep track of the number of elements in the nums array
+	do
+	{
+
+		cout << "please enter a number" << endl;
+		cin >> input;
+
+		nums[i] = input;
+		i++;
+		count++;
+	} while (input != -1);
+
+	
+	//this segment of code will call the stvDev function
+	double stndDev = stvDev(nums, count);
+
+	//this segment of code will print the histogram based on the array produced by the histogram function.
+	//this portion of code creates a variable for the histogram function to point to and then sets that varaible equal to the array that was calculated in the histogram function.
+	double *p;
+	p = histogram(nums, count);
+	
+	//This series of cout statments and for loops will print out the histogram.
+	cout << "9| ";
+	for (int i = 0; i < p[9]; i++)
+	{
+		cout << "*";
+	}
+	cout<<endl;
+	cout << "8| ";
+	for (int i = 0; i < p[8]; i++)
+	{
+		cout << "*";
+	}
+	cout << endl;
+	cout << "7| ";
+	for (int i = 0; i < p[7]; i++)
+	{
+		cout << "*";
+	}
+	cout << endl;
+	cout << "6| ";
+	for (int i = 0; i < p[6]; i++)
+	{
+		cout << "*";
+	}
+	cout << endl;
+	cout << "5| ";
+	for (int i = 0; i < p[5]; i++)
+	{
+		cout << "*";
+	}
+	cout << endl;
+	cout << "4| ";
+	for (int i = 0; i < p[4]; i++)
+	{
+		cout << "*";
+	}
+	cout << endl;
+	cout << "3| ";
+	for (int i = 0; i < p[3]; i++)
+	{
+		cout << "*";
+	}
+	cout << endl;
+	cout << "2| ";
+	for (int i = 0; i < p[2]; i++)
+	{
+		cout << "*";
+	}
+	cout << endl;
+	cout << "1| ";
+	for (int i = 0; i < p[1]; i++)
+	{
+		cout << "*";
+	}
+	cout << endl;
+	cout << "0| ";
+	for (int i = 0; i < p[0]; i++)
+	{
+		cout << "*";
+	}
+	cout << endl;
+	cout << "SD: " << stndDev << endl;
+	return 0;
+}
+
+//defing the mean function
+double mean(double x[],double count)
+{
+	double s = count;
+	double sum = 0;
+
+	for (int i = 0; i < s; i++)
+	{
+		sum += x[i];
+
+	}
+
+	double m = sum / s;
+
+	return m;
+}
+
+//defining the stvDev function
+double stvDev(double set[],double c)
+{
+	//setting up the variables needed to calcualte the standard deviation
+	double sumOfValues = 0;
+	double N = c;
+	//calling the mean function
+	double m = mean(set,c);
+
+	//this for loop created the sum needed for the numerator in the standard deviation function
+	for (int i = 0; i < c; i++)
+	{
+		sumOfValues += pow((set[i]-m),2);
+	}
+
+	double standardDev = sqrt(sumOfValues/ N);
+
+	return standardDev;
+}
+
+//defining the historgram function
+double* histogram(double data[],double count)
+{
+	//creating an array that will hold the bin values in the histogram
+	static double hist[9] = { 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+	//creating a variable to hold the number of elements of the data array
+	double c = count;
+	//this series of for loops will test each element of the nums array that was created in the main function and group them in bins
+	for (int i = 0; i < c; i++)
+	{
+		if (data[i] <= 10)
+		{
+			hist[0]++;
+		}
+		if (data[i] >= 10 && data[i] < 20)
+		{
+			hist[1]++;
+		}
+		if (data[i] >= 20 && data[i] < 30)
+		{
+			hist[2]++;
+		}
+		if (data[i] >= 30 && data[i] < 40)
+		{
+			hist[3]++;
+		}
+		if (data[i] >= 40 && data[i] < 50)
+		{
+			hist[4]++;
+		}
+		if (data[i] >= 50 && data[i] < 60)
+		{
+			hist[5]++;
+		}
+		if (data[i] >= 60 && data[i] < 70)
+		{
+			hist[6]++;
+		}
+		if (data[i] >= 70 && data[i] < 80)
+		{
+			hist[7]++;
+		}
+		if (data[i] >= 80 && data[i] < 90)
+		{
+			hist[8]++;
+		}
+		if (data[i] >= 90)
+		{
+			hist[9]++;
+		}
+		
+	}
+
+	return hist;
+}
